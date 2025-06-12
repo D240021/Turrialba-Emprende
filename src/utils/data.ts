@@ -1,0 +1,73 @@
+export const entrepreneurships = [{
+  id: 'ent1',
+  name: 'Café Turrialba',
+  category: 'Food & Beverage',
+  description: 'Family-owned coffee plantation offering organic, shade-grown coffee. Tours available to see the entire coffee production process from bean to cup.',
+  phone: '+506 2556-1234',
+  email: 'info@cafeturrialba.com',
+  address: '5km North of Turrialba City Center',
+  hours: 'Mon-Sat: 8:00 AM - 5:00 PM',
+  coordinates: [9.9146, -83.6782],
+  images: ['https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80'],
+  products: ['Organic Coffee Beans', 'Coffee Tours', 'Handmade Coffee Accessories', 'Local Coffee Tastings']
+}, {
+  id: 'ent2',
+  name: 'Artesanías Jiménez',
+  category: 'Crafts & Artisanal',
+  description: 'Traditional crafts workshop showcasing local artisans creating handmade products using indigenous techniques passed down through generations.',
+  phone: '+506 2556-7890',
+  email: 'contact@artesaniasjimenez.com',
+  address: 'Central Plaza, Jiménez',
+  hours: 'Tue-Sun: 9:00 AM - 6:00 PM',
+  coordinates: [9.8946, -83.7082],
+  images: ['https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1604849329105-1f07c69f89a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80'],
+  products: ['Handwoven Textiles', 'Ceramic Pottery', 'Indigenous Masks', 'Jewelry']
+}, {
+  id: 'ent3',
+  name: 'Aventuras Turrialba',
+  category: 'Tourism & Adventure',
+  description: 'Adventure tourism company offering white water rafting, canyoning, hiking, and volcano tours with experienced local guides who know the region intimately.',
+  phone: '+506 2556-4321',
+  email: 'tours@aventurasturrialba.com',
+  address: '200m East of Turrialba Bus Station',
+  hours: 'Daily: 7:00 AM - 7:00 PM',
+  coordinates: [9.9046, -83.6932],
+  images: ['https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1449&q=80', 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'],
+  products: ['White Water Rafting', 'Volcano Tours', 'Canyoning Adventures', 'Bird Watching']
+}, {
+  id: 'ent4',
+  name: 'Finca Orgánica La Esperanza',
+  category: 'Agriculture',
+  description: 'Organic farm producing a variety of tropical fruits, vegetables, and medicinal plants using sustainable farming methods. Educational tours and farm-to-table experiences available.',
+  phone: '+506 2556-9876',
+  email: 'info@fincalaesperanza.com',
+  address: '3km South of Turrialba',
+  hours: 'Mon-Fri: 8:00 AM - 4:00 PM, Sat: 8:00 AM - 12:00 PM',
+  coordinates: [9.8846, -83.6782],
+  images: ['https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1470685983317-0084951ce31f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80'],
+  products: ['Organic Fruits', 'Vegetables', 'Medicinal Plants', 'Farm Tours']
+}, {
+  id: 'ent5',
+  name: 'Posada Rural Don Carlos',
+  category: 'Accommodation',
+  description: 'Charming rural lodge offering authentic Costa Rican hospitality with comfortable rooms, home-cooked meals using local ingredients, and cultural experiences.',
+  phone: '+506 2556-6543',
+  email: 'reservations@posadadoncarlos.com',
+  address: '1km West of Jiménez Central Park',
+  hours: '24/7 (Reception: 7:00 AM - 10:00 PM)',
+  coordinates: [9.8976, -83.7182],
+  images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'],
+  products: ['Accommodation', 'Traditional Meals', 'Cultural Experiences', 'Local Tours']
+}, {
+  id: 'ent6',
+  name: 'Quesos Artesanales Turrialba',
+  category: 'Food & Beverage',
+  description: 'Family dairy farm producing the famous Turrialba cheese using traditional methods. Visitors can learn about the cheese-making process and sample various types of fresh cheese.',
+  phone: '+506 2556-2345',
+  email: 'info@quesosturrialba.com',
+  address: '4km Northeast of Turrialba',
+  hours: 'Mon-Sat: 9:00 AM - 4:00 PM',
+  coordinates: [9.9246, -83.6682],
+  images: ['https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80', 'https://images.unsplash.com/photo-1552767059-ce182ead6c1b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'https://images.unsplash.com/photo-1559561853-08451507cbe7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80'],
+  products: ['Turrialba Cheese', 'Dairy Products', 'Cheese Making Tours', 'Local Milk']
+}];

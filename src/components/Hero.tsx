@@ -8,7 +8,7 @@ const carouselImages = [{
 }, {
   url: 'https://images.unsplash.com/photo-1624033372373-15c9df5baef4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
   alt: 'Local coffee farm in Turrialba',
-  caption: 'Discover local coffee production'
+  caption: 'Descubre la producción local de café'
 }, {
   url: 'https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
   alt: 'Traditional crafts from Turrialba',
@@ -36,17 +36,17 @@ export function Hero() {
         {/* Caption */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            Turrialba & Jiménez Entrepreneurs
+            Emprendedores de Turrilaba & Jiménez
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl">
             {carouselImages[currentSlide].caption}
           </p>
           <div className="flex space-x-4">
             <Link to="/register" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-              Register Business
+              Registrar Negocio
             </Link>
             <Link to="/" className="bg-white hover:bg-gray-100 text-green-800 font-bold py-3 px-6 rounded-lg transition-colors">
-              Explore Directory
+              Explorar Directorio
             </Link>
           </div>
         </div>

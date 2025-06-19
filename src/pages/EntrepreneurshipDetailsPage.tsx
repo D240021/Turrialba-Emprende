@@ -16,15 +16,15 @@ export function EntrepreneurshipDetailsPage() {
   }, [id]);
   if (!entrepreneurship) {
     return <div className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-bold mb-4">Entrepreneurship not found</h2>
+        <h2 className="text-2xl font-bold mb-4">Emprendimiento no encontrado</h2>
         <Link to="/" className="text-green-600 hover:text-green-800 inline-flex items-center">
-          <ArrowLeftIcon className="w-4 h-4 mr-2" /> Return to home page
+          <ArrowLeftIcon className="w-4 h-4 mr-2" /> Volver al inicio
         </Link>
       </div>;
   }
   return <div className="container mx-auto px-4 py-8">
       <Link to="/" className="text-green-600 hover:text-green-800 inline-flex items-center mb-6">
-        <ArrowLeftIcon className="w-4 h-4 mr-2" /> Back to all entrepreneurships
+        <ArrowLeftIcon className="w-4 h-4 mr-2" /> Volver a los emprendimientos
       </Link>
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
@@ -41,7 +41,7 @@ export function EntrepreneurshipDetailsPage() {
                 {entrepreneurship.description}
               </p>
               <h3 className="font-semibold text-lg mb-2">
-                Contact Information
+                Información de contacto
               </h3>
               <div className="space-y-2">
                 <p className="flex items-center text-gray-700">
@@ -64,7 +64,7 @@ export function EntrepreneurshipDetailsPage() {
             </div>
             <div className="mt-4">
               <h3 className="font-semibold text-lg mb-2">
-                Products & Services
+                Productos y Servicios
               </h3>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
                 {entrepreneurship.products.map((product, index) => <li key={index}>{product}</li>)}

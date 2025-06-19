@@ -72,71 +72,71 @@ export function RegistrationForm() {
       {submitSuccess && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
           <strong className="font-bold">Success! </strong>
           <span className="block sm:inline">
-            Your registration has been submitted. We will contact you soon.
+            Tu registración fue exitosa! Prontamente te contactaremos
           </span>
         </div>}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            Business Name *
+            Nombre del negocio *
           </label>
           <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.name ? 'border-red-500' : 'border-gray-300'}`} />
           {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
         </div>
         <div>
           <label htmlFor="ownerName" className="block text-sm font-medium text-gray-700 mb-1">
-            Owner Name *
+            Nombre del dueño *
           </label>
           <input type="text" id="ownerName" name="ownerName" value={formData.ownerName} onChange={handleChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.ownerName ? 'border-red-500' : 'border-gray-300'}`} />
           {errors.ownerName && <p className="mt-1 text-sm text-red-600">{errors.ownerName}</p>}
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address *
+            Dirección de correo *
           </label>
           <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.email ? 'border-red-500' : 'border-gray-300'}`} />
           {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
         </div>
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-            Phone Number *
+            Número telefónico *
           </label>
           <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.phone ? 'border-red-500' : 'border-gray-300'}`} />
           {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
         </div>
         <div>
           <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-            Business Address *
+            Dirección del negocio *
           </label>
           <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.address ? 'border-red-500' : 'border-gray-300'}`} />
           {errors.address && <p className="mt-1 text-sm text-red-600">{errors.address}</p>}
         </div>
         <div>
           <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
-            Business Category *
+            Categoria del negocio *
           </label>
           <select id="category" name="category" value={formData.category} onChange={handleChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.category ? 'border-red-500' : 'border-gray-300'}`}>
-            <option value="">Select a category</option>
-            <option value="Food & Beverage">Food & Beverage</option>
-            <option value="Crafts & Artisanal">Crafts & Artisanal</option>
-            <option value="Tourism & Adventure">Tourism & Adventure</option>
-            <option value="Agriculture">Agriculture</option>
-            <option value="Accommodation">Accommodation</option>
-            <option value="Other">Other</option>
+            <option value="">Selecciona una categoría</option>
+            <option value="Comida y Bebida">Comida y Bebida</option>
+            <option value="Artesanía">Artesanía</option>
+            <option value="Turismo y Aventura">Turismo y Aventura</option>
+            <option value="Agricultura">Agricultura</option>
+            <option value="Alojamiento">Alojamiento</option>
+            <option value="Otros">Otros</option>
           </select>
           {errors.category && <p className="mt-1 text-sm text-red-600">{errors.category}</p>}
         </div>
       </div>
       <div>
         <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-          Business Description *
+          Descripción del negocio *
         </label>
         <textarea id="description" name="description" rows={4} value={formData.description} onChange={handleChange} className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.description ? 'border-red-500' : 'border-gray-300'}`} />
         {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
       </div>
       <div>
         <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
-          Website/Social Media (Optional)
+          Página Web/Red Social (Opcional)
         </label>
         <input type="url" id="website" name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600" />
       </div>
@@ -146,9 +146,9 @@ export function RegistrationForm() {
         </div>
         <div className="ml-3 text-sm">
           <label htmlFor="agreeToTerms" className="font-medium text-gray-700">
-            I agree to the{' '}
+            Estoy de acuerdo con los {' '}
             <a href="#" className="text-green-600 hover:text-green-800">
-              terms and conditions
+              términos y condiciones
             </a>{' '}
             *
           </label>

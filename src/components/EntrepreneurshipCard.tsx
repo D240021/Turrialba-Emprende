@@ -27,7 +27,7 @@ export function EntrepreneurshipCard({
           <span>{entrepreneurship.phone}</span>
         </div>
         <Link to={`/entrepreneurship/${entrepreneurship.id}`} className="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded transition-colors">
-          View Details
+          Ver detalles
         </Link>
       </div>
     </div>;

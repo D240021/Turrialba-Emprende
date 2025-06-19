@@ -2,17 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 const carouselImages = [{
-  url: 'https://images.unsplash.com/photo-1626604112882-1ba448d9a4a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-  alt: 'Scenic view of Turrialba volcano and landscape',
-  caption: 'Explore the natural beauty of Turrialba'
+  url: './img/volcan-turrialba.png',
+  alt: 'Imagen panorámica del volcán turrialba.',
+  caption: 'Explora la belleza natural de Turrialba'
 }, {
-  url: 'https://images.unsplash.com/photo-1624033372373-15c9df5baef4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-  alt: 'Local coffee farm in Turrialba',
+  url: './img/plantacion-cafe.png',
+  alt: 'Foto de plantaciones de café desde en enfoque superior.',
   caption: 'Descubre la producción local de café'
 }, {
-  url: 'https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-  alt: 'Traditional crafts from Turrialba',
-  caption: 'Experience local artisanal crafts'
+  url: './img/artesania-turrialba.png',
+  alt: 'Señoras turrilbeñas fabricando productos artesanales.',
+  caption: 'Experimenta la artesanía local'
 }];
 export function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -36,7 +36,7 @@ export function Hero() {
         {/* Caption */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            Emprendedores de Turrilaba & Jiménez
+            Emprendedores de Turrialba & Jiménez
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl">
             {carouselImages[currentSlide].caption}

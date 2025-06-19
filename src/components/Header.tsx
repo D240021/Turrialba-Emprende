@@ -15,14 +15,14 @@ export function Header() {
                 <NavLink to="/" className={({
                 isActive
               }) => isActive ? 'text-yellow-300 font-medium' : 'hover:text-yellow-300'} end>
-                  Home
+                  Inicio
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/register" className={({
                 isActive
               }) => isActive ? 'text-yellow-300 font-medium' : 'hover:text-yellow-300'}>
-                  Register
+                  Registrarme
                 </NavLink>
               </li>
             </ul>
@@ -37,14 +37,14 @@ export function Header() {
                 <NavLink to="/" className={({
               isActive
             }) => isActive ? 'text-yellow-300 font-medium block py-2' : 'block py-2 hover:text-yellow-300'} onClick={() => setIsMenuOpen(false)} end>
-                  Home
+                  Inicio
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/register" className={({
               isActive
             }) => isActive ? 'text-yellow-300 font-medium block py-2' : 'block py-2 hover:text-yellow-300'} onClick={() => setIsMenuOpen(false)}>
-                  Register
+                  Registrarme
                 </NavLink>
               </li>
             </ul>

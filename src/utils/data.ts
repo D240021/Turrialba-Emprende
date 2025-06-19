@@ -29,7 +29,7 @@ export const entrepreneurships = [{
   description: 'Productos y tour apícola artesanal. Visitar nuestros apiarios, conocer las colmenas. Abejas nobles acostumbradas al contacto humano.',
   phone: '+506 2531-2862',
   email: 'beli286@hotmail.com',
-  address: '200m East of Turrialba Bus Station',
+  address: 'Pejibaye de Jiménez, Cartago. 150mts Este de la Plaza de Deportes.',
   hours: 'Lunes a Viernes de 8 a.m. a 12 m.d.',
   coordinates: [9.9046, -83.6932],
   images: ['../img/panal-abejas.png'],

@@ -73,7 +73,7 @@ export function EntrepreneurshipDetailsPage() {
           </div>
         </div>
         <div className="p-6">
-          <h3 className="font-semibold text-lg mb-4">Location</h3>
+          <h3 className="font-semibold text-lg mb-4">Ubicación</h3>
           <div className="h-64">
             <InteractiveMap selectedId={entrepreneurship.id} />
           </div>

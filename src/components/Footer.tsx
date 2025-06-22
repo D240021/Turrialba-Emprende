@@ -13,13 +13,13 @@ export function Footer() {
             Una plataforma para exhibir y Promover el emprendimiento local de Turrialba y Jiménez impulsados por la metodología D-HOPE.
           </p>
           <div className="flex space-x-4">
-            <a href="#" className="text-white hover:text-yellow-300" aria-label="Facebook">
+            <a href="https://www.facebook.com/p/Municipalidad-de-Turrialba-100064617762560/?locale=es_LA" className="text-white hover:text-yellow-300" aria-label="Facebook">
               <FacebookIcon className="w-6 h-6" />
             </a>
-            <a href="#" className="text-white hover:text-yellow-300" aria-label="Instagram">
+            <a href="https://www.instagram.com/municipalturrialbacf/?hl=es" className="text-white hover:text-yellow-300" aria-label="Instagram">
               <InstagramIcon className="w-6 h-6" />
             </a>
-            <a href="#" className="text-white hover:text-yellow-300" aria-label="Twitter">
+            <a href="https://x.com/adm_turrialbacf?lang=es" className="text-white hover:text-yellow-300" aria-label="Twitter">
               <TwitterIcon className="w-6 h-6" />
             </a>
           </div>

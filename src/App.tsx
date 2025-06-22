@@ -8,7 +8,7 @@ import { Footer } from './components/Footer';
 
 export function App() {
   return (
-    <BrowserRouter basename="/Turrialba-Emprende">
+    <BrowserRouter basename="/Turrialba-Emprende/">
       <div className="flex flex-col min-h-screen bg-white">
         <Header />
         <main className="flex-grow">

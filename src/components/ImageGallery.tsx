@@ -13,7 +13,7 @@ export function ImageGallery({
   return <div className="relative w-full h-full">
       {/* Main Image */}
       <div className="relative w-full h-96 overflow-hidden">
-        {images.map((image, index) => <img key={index} src={image} alt={`Gallery image ${index + 1}`} className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${index === currentImage ? 'opacity-100' : 'opacity-0'}`} />)}
+        {images.map((image, index) => <img key={index} src={`../${image}`} alt={`Gallery image ${index + 1}`} className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${index === currentImage ? 'opacity-100' : 'opacity-0'}`} />)}
         {/* Navigation Arrows */}
         {images.length > 1 && <>
             <button onClick={prevImage} className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full focus:outline-none" aria-label="Previous image">

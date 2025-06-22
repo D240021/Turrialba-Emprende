@@ -6,7 +6,7 @@ export function Header() {
   return <header className="bg-green-800 text-white shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          <Link to="/" className="text-2xl font-bold">
+          <Link to="//" className="text-2xl font-bold">
             Turri Emprende
           </Link>
           <nav className="hidden md:block">

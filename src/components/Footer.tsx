@@ -42,11 +42,6 @@ export function Footer() {
                 Política de privacidad
               </button>
             </li>
-            <li>
-              <a href="#" className="hover:text-yellow-300 transition-colors">
-                Términos de servicio
-              </a>
-            </li>
           </ul>
         </div>
         <div>

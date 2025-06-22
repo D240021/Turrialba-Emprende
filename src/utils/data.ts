@@ -8,7 +8,7 @@ export const entrepreneurships = [{
   address: '2km oeste de la Iglesia católica, sector San Martín, Pejibaye.',
   hours: 'Lunes a Domingo de 8 a.m. a 5 p.m.',
   coordinates: [9.9146, -83.6782],
-  images: ['../img/planta-cafe.png'],
+  images: ['img/planta-cafe.png'],
   products: ['Café orgánico', 'Tours de café']
 }, {
   id: 'ent2',
@@ -20,7 +20,7 @@ export const entrepreneurships = [{
   address: 'Pejibaye, Barrio Doña Fina.',
   hours: 'Lunes a Viernes de 8 a.m. a 4 p.m.',
   coordinates: [9.8946, -83.7082],
-  images: ['../img/artesania-piedras.png'],
+  images: ['img/artesania-piedras.png'],
   products: ['Pintura en piedras']
 }, {
   id: 'ent3',
@@ -32,7 +32,7 @@ export const entrepreneurships = [{
   address: 'Pejibaye de Jiménez, Cartago. 150mts Este de la Plaza de Deportes.',
   hours: 'Lunes a Viernes de 8 a.m. a 12 m.d.',
   coordinates: [9.9046, -83.6932],
-  images: ['../img/panal-abejas.png'],
+  images: ['img/panal-abejas.png'],
   products: ['Tour apícola', 'Productos artesanales']
 }, {
   id: 'ent4',
@@ -44,7 +44,7 @@ export const entrepreneurships = [{
   address: 'Las Vueltas de Tucurrique 300mts Este del Abastecedor San José.',
   hours: 'Lunes a Miércoles de 7 a.m. a 12 m.d. ',
   coordinates: [9.8846, -83.6782],
-  images: ['../img/finca-costarricense.png'],
+  images: ['img/finca-costarricense.png'],
   products: ['Tour por la finca']
 }, {
   id: 'ent5',
@@ -56,7 +56,7 @@ export const entrepreneurships = [{
   address: '200mts Oeste de la plaza pública de San Martín, Tres Equis.',
   hours: 'Lunes a Viernes de 8 a.m. a 11a.m. y de 1 p.m. a 3 p.m.',
   coordinates: [9.8976, -83.7182],
-  images: ['../img/artesania-reutilizable.png'],
+  images: ['img/artesania-reutilizable.png'],
   products: ['Materiales reutilizables', 'Productos artesanales']
 }, {
   id: 'ent6',
@@ -68,6 +68,6 @@ export const entrepreneurships = [{
   address: 'De la Iglesia del Carmen de Santa Cruz 500mts Oeste, 150 mts Sur y 150mts Este.',
   hours: ' Lunes a Viernes de 8 a.m. a 5 p.m.',
   coordinates: [9.9246, -83.6682],
-  images: ['../img/queso-turrialba.png'],
+  images: ['img/queso-turrialba.png'],
   products: ['Queso Turrialba', 'Tour de preparación del queso']
 }];

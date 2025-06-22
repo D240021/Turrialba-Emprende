@@ -23,7 +23,7 @@ export function EntrepreneurshipDetailsPage() {
       </div>;
   }
   return <div className="container mx-auto px-4 py-8">
-      <Link to="/" className="text-green-600 hover:text-green-800 inline-flex items-center mb-6">
+      <Link to="//" className="text-green-600 hover:text-green-800 inline-flex items-center mb-6">
         <ArrowLeftIcon className="w-4 h-4 mr-2" /> Volver a los emprendimientos
       </Link>
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">

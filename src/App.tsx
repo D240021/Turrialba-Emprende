@@ -1,12 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { EntrepreneurshipDetailsPage } from './pages/EntrepreneurshipDetailsPage';
 import { RegistrationPage } from './pages/RegistrationPage';
 import { Footer } from './components/Footer';
+
 export function App() {
-  return <Router>
+  return (
+    <BrowserRouter basename="/Turrialba-Emprende">
       <div className="flex flex-col min-h-screen bg-white">
         <Header />
         <main className="flex-grow">
@@ -18,5 +20,6 @@ export function App() {
         </main>
         <Footer />
       </div>
-    </Router>;
+    </BrowserRouter>
+  );
 }

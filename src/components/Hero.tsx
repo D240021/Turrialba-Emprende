@@ -1,24 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
-const carouselImages = [
-  {
-    url: `${import.meta.env.BASE_URL}img/volcan-turrialba.png`,
-    alt: 'Imagen panorámica del volcán turrialba.',
-    caption: 'Explora la belleza natural de Turrialba'
-  },
-  {
-    url: `${import.meta.env.BASE_URL}img/plantacion-cafe.png`,
-    alt: 'Foto de plantaciones de café desde en enfoque superior.',
-    caption: 'Descubre la producción local de café'
-  },
-  {
-    url: `${import.meta.env.BASE_URL}img/artesania-turrialba.png`,
-    alt: 'Señoras turrialbeñas fabricando productos artesanales.',
-    caption: 'Experimenta la artesanía local'
-  }
-];
-
+const carouselImages = [{
+  url: './img/volcan-turrialba.png',
+  alt: 'Imagen panorámica del volcán turrialba.',
+  caption: 'Explora la belleza natural de Turrialba'
+}, {
+  url: './img/plantacion-cafe.png',
+  alt: 'Foto de plantaciones de café desde en enfoque superior.',
+  caption: 'Descubre la producción local de café'
+}, {
+  url: './img/artesania-turrialba.png',
+  alt: 'Señoras turrilbeñas fabricando productos artesanales.',
+  caption: 'Experimenta la artesanía local'
+}];
 export function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const nextSlide = useCallback(() => {

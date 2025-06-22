@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 const carouselImages = [{
-  url: 'img/volcan-turrialba.png',
+  url: './img/volcan-turrialba.png',
   alt: 'Imagen panorámica del volcán turrialba.',
   caption: 'Explora la belleza natural de Turrialba'
 }, {
-  url: 'img/plantacion-cafe.png',
+  url: './img/plantacion-cafe.png',
   alt: 'Foto de plantaciones de café desde en enfoque superior.',
   caption: 'Descubre la producción local de café'
 }, {
-  url: 'img/artesania-turrialba.png',
+  url: './img/artesania-turrialba.png',
   alt: 'Señoras turrilbeñas fabricando productos artesanales.',
   caption: 'Experimenta la artesanía local'
 }];

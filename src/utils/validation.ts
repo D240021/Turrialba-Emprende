@@ -1,5 +1,8 @@
-export const validateForm = formData => {
-  const errors = {
+// src/utils/validation.ts
+import { FormData, FormErrors } from '../types'; // <-- Importa las interfaces aquí
+
+export const validateForm = (formData: FormData): FormErrors => {
+  const errors: FormErrors = {
     name: '',
     ownerName: '',
     email: '',
@@ -9,6 +12,7 @@ export const validateForm = formData => {
     description: '',
     agreeToTerms: ''
   };
+
   // Business Name validation
   if (!formData.name.trim()) {
     errors.name = 'Business name is required';

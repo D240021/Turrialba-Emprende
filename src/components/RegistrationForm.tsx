@@ -1,8 +1,13 @@
+// src/components/RegistrationForm.tsx
+
 import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { validateForm } from '../utils/validation';
+import { supabase } from '../utils/supabaseCliente'; 
+import { FormData, FormErrors } from '../types'; // <-- ¡Importa tus tipos aquí!
 
-const initialFormData = {
+// Asegúrate de que initialFormData use el tipo FormData
+const initialFormData: FormData = {
   name: '',
   ownerName: '',
   email: '',
@@ -13,7 +18,9 @@ const initialFormData = {
   website: '',
   agreeToTerms: false
 };
-const initialErrors = {
+
+// Asegúrate de que initialErrors use el tipo FormErrors
+const initialErrors: FormErrors = {
   name: '',
   ownerName: '',
   email: '',
@@ -25,59 +32,91 @@ const initialErrors = {
 };
 
 export function RegistrationForm() {
-  const [formData, setFormData] = useState(initialFormData);
-  const [errors, setErrors] = useState(initialErrors);
+  const [formData, setFormData] = useState<FormData>(initialFormData); // Tipado para useState
+  const [errors, setErrors] = useState<FormErrors>(initialErrors); // Tipado para useState
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleChange = e => {
+  // Tipado del evento handleChange
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
+
     setFormData(prev => ({
       ...prev,
       [name]: newValue
     }));
-    // Clear error when user starts typing
-    if (errors[name]) {
+
+    // Limpiar error cuando el usuario empieza a escribir (con tipado de clave)
+    if (errors[name as keyof FormErrors]) { // Usamos FormErrors aquí
       setErrors(prev => ({
         ...prev,
-        [name]: ''
+        [name as keyof FormErrors]: '' // Usamos FormErrors aquí
       }));
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e: React.FormEvent) => { // Tipado del evento handleSubmit
     e.preventDefault();
 
-   
     const validationErrors = validateForm(formData);
     setErrors(validationErrors);
     const hasErrors = Object.values(validationErrors).some(error => error !== '');
 
     if (!hasErrors) {
       setIsSubmitting(true);
+      setSubmitSuccess(false); // Reinicia el estado de éxito
 
-      
-      if (!formRef.current) return;
-      emailjs.sendForm(
-        'service_a1dy6pm',     
-        'template_3nmnw0p',    
-        formRef.current,
-        'XUyBC_SC32W8F5jkY'      
-      ).then(() => {
-        setIsSubmitting(false);
+      try {
+        // 1. Enviar datos a Supabase
+        const { data, error } = await supabase
+          .from('registros_negocios') // ¡Asegúrate de que este es el nombre EXACTO de tu tabla en Supabase!
+          .insert([
+            {
+              nombre_negocio: formData.name,
+              nombre_dueno: formData.ownerName,
+              correo_electronico: formData.email,
+              telefono: formData.phone,
+              direccion: formData.address,
+              categoria: formData.category,
+              descripcion: formData.description,
+              sitio_web: formData.website,
+              acepta_terminos: formData.agreeToTerms
+            }
+          ]);
+
+        if (error) {
+          throw error; // Propagar el error si Supabase falla
+        }
+
+        console.log('Datos guardados en Supabase:', data);
+
+        // 2. Si el envío a Supabase fue exitoso, procede con EmailJS
+        if (formRef.current) {
+          await emailjs.sendForm(
+            'service_a1dy6pm',
+            'template_3nmnw0p',
+            formRef.current,
+            'XUyBC_SC32W8F5jkY'
+          );
+          console.log('Correo enviado con EmailJS');
+        }
+
         setSubmitSuccess(true);
-        setFormData(initialFormData);
-        
+        setFormData(initialFormData); // Limpia el formulario
+        setErrors(initialErrors); // Limpia los errores
+
         setTimeout(() => {
           setSubmitSuccess(false);
         }, 5000);
-      }).catch((error) => {
-        setIsSubmitting(false);
-        console.error('Error al enviar:', error);
+
+      } catch (error: any) { // Captura el error y tipa como 'any' para acceder a 'message'
+        console.error('Error al enviar el formulario:', error.message || error);
         alert('Error al enviar el formulario, intenta más tarde.');
-      });
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -85,14 +124,16 @@ export function RegistrationForm() {
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       {submitSuccess && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-          <strong className="font-bold">Success! </strong>
+          <strong className="font-bold">¡Éxito! </strong>
           <span className="block sm:inline">
-            Tu registración fue exitosa! Prontamente te contactaremos
+            Tu registración fue exitosa. Prontamente te contactaremos.
           </span>
         </div>
       )}
 
-      
+      {/* Tus campos de formulario aquí */}
+      {/* Asegúrate de que los atributos 'name' en tus inputs coincidan exactamente con las claves en FormData */}
+      {/* Ejemplo: */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -101,13 +142,14 @@ export function RegistrationForm() {
           <input
             type="text"
             id="name"
-            name="name"
+            name="name" // <-- ¡Importante! Coincide con 'name' en FormData
             value={formData.name}
             onChange={handleChange}
             className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
           />
           {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
         </div>
+        {/* ... Repite para todos tus campos ... */}
         <div>
           <label htmlFor="ownerName" className="block text-sm font-medium text-gray-700 mb-1">
             Nombre del dueño *
@@ -115,7 +157,7 @@ export function RegistrationForm() {
           <input
             type="text"
             id="ownerName"
-            name="ownerName"
+            name="ownerName" // <-- ¡Importante! Coincide con 'ownerName' en FormData
             value={formData.ownerName}
             onChange={handleChange}
             className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.ownerName ? 'border-red-500' : 'border-gray-300'}`}

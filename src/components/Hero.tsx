@@ -22,6 +22,35 @@ export function Hero() {
   const prevSlide = () => {
     setCurrentSlide(prev => (prev - 1 + carouselImages.length) % carouselImages.length);
   };
+const scrollToElement = (elementId: string) => {
+  const target = document.getElementById(elementId);
+  if (!target) return;
+
+  const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+  const startPosition = window.pageYOffset;
+  const distance = targetPosition - startPosition;
+  const duration = 800; // milisegundos
+  let startTime: number | null = null;
+
+  function animation(currentTime: number) {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+    window.scrollTo(0, run);
+    if (timeElapsed < duration) requestAnimationFrame(animation);
+  }
+
+  function easeInOutQuad(t: number, b: number, c: number, d: number) {
+    t /= d / 2;
+    if (t < 1) return (c / 2) * t * t + b;
+    t--;
+    return (-c / 2) * (t * (t - 2) - 1) + b;
+  }
+
+  requestAnimationFrame(animation);
+};
+
+
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
@@ -45,9 +74,19 @@ export function Hero() {
             <Link to="/register" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
               Registrar Negocio
             </Link>
-          <a href="#emprendimientos" className="bg-white hover:bg-gray-100 text-green-800 font-bold py-3 px-6 rounded-lg transition-colors">
-            Explorar Directorio
-          </a>
+<a
+  href="#emprendimientos"
+  onClick={(e) => {
+    e.preventDefault();
+    scrollToElement('emprendimientos');
+  }}
+  className="bg-white hover:bg-gray-100 text-green-800 font-bold py-3 px-6 rounded-lg transition-colors"
+>
+  Explorar Directorio
+</a>
+
+
+
           </div>
         </div>
         {/* Navigation Arrows */}

@@ -45,9 +45,9 @@ export function Hero() {
             <Link to="/register" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
               Registrar Negocio
             </Link>
-            <Link to="/" className="bg-white hover:bg-gray-100 text-green-800 font-bold py-3 px-6 rounded-lg transition-colors">
-              Explorar Directorio
-            </Link>
+          <a href="#emprendimientos" className="bg-white hover:bg-gray-100 text-green-800 font-bold py-3 px-6 rounded-lg transition-colors">
+            Explorar Directorio
+          </a>
           </div>
         </div>
         {/* Navigation Arrows */}

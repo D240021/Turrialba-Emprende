@@ -1,6 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPinIcon, UserPlusIcon } from 'lucide-react';
+
+function scrollToElement(id: string) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 export function CallToAction() {
   return <section className="py-12 bg-green-50 rounded-xl">
     <div className="container mx-auto px-4">
@@ -17,10 +25,17 @@ export function CallToAction() {
               <UserPlusIcon className="w-5 h-5 mr-2" />
               Registrar tu negocio
             </Link>
-            <Link to="/" className="inline-flex items-center justify-center bg-white hover:bg-gray-100 text-green-800 font-bold py-3 px-6 rounded-lg border border-green-600 transition-colors">
-              <MapPinIcon className="w-5 h-5 mr-2" />
-              Explorar Mapa
-            </Link>
+<a
+  href="#descubrir"
+  onClick={(e) => {
+    e.preventDefault();
+    scrollToElement('descubrir');
+  }}
+  className="inline-flex items-center justify-center bg-white hover:bg-gray-100 text-green-800 font-bold py-3 px-6 rounded-lg border border-green-600 transition-colors"
+>
+  <MapPinIcon className="w-5 h-5 mr-2" />
+  Explorar Mapa
+</a>
           </div>
         </div>
         <div className="md:text-right">

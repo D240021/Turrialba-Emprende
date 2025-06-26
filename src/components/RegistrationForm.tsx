@@ -3,9 +3,10 @@
 import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { validateForm } from '../utils/validation';
-import { supabase } from '../utils/supabaseCliente';
-import { FormData, FormErrors } from '../types';
+import { supabase } from '../utils/supabaseCliente'; 
+import { FormData, FormErrors } from '../types'; // <-- ¡Importa tus tipos aquí!
 
+// Asegúrate de que initialFormData use el tipo FormData
 const initialFormData: FormData = {
   name: '',
   ownerName: '',
@@ -15,10 +16,10 @@ const initialFormData: FormData = {
   category: '',
   description: '',
   website: '',
-  agreeToTerms: false,
-  images: [] // Inicializa el array de archivos
+  agreeToTerms: false
 };
 
+// Asegúrate de que initialErrors use el tipo FormErrors
 const initialErrors: FormErrors = {
   name: '',
   ownerName: '',
@@ -31,50 +32,32 @@ const initialErrors: FormErrors = {
 };
 
 export function RegistrationForm() {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
-  const [errors, setErrors] = useState<FormErrors>(initialErrors);
+  const [formData, setFormData] = useState<FormData>(initialFormData); // Tipado para useState
+  const [errors, setErrors] = useState<FormErrors>(initialErrors); // Tipado para useState
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const [uploadProgress, setUploadProgress] = useState(0); // Para mostrar progreso de subida
-  const [uploading, setUploading] = useState(false);
 
+  // Tipado del evento handleChange
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-
-    let newValue: string | boolean | FileList; // Tipo más flexible para newValue
-
-    if (type === 'checkbox' && e.target instanceof HTMLInputElement) {
-      newValue = e.target.checked;
-    } else if (type === 'file' && e.target instanceof HTMLInputElement) {
-      // Manejar la selección de archivos
-      // Guardamos los objetos File directamente en formData.images
-      newValue = e.target.files ? Array.from(e.target.files) : [];
-      setFormData(prev => ({
-        ...prev,
-        [name]: newValue // Asigna File[] a formData.images
-      }));
-      // No continuar con el resto de la lógica de setFormData para files, ya que se manejó arriba.
-      // Y tampoco limpiamos errores de texto para un input de tipo file de esta manera.
-      return;
-    } else {
-      newValue = value;
-    }
+    const { name, value, type, checked } = e.target;
+    const newValue = type === 'checkbox' ? checked : value;
 
     setFormData(prev => ({
       ...prev,
       [name]: newValue
     }));
 
-    if (errors[name as keyof FormErrors]) {
+    // Limpiar error cuando el usuario empieza a escribir (con tipado de clave)
+    if (errors[name as keyof FormErrors]) { // Usamos FormErrors aquí
       setErrors(prev => ({
         ...prev,
-        [name as keyof FormErrors]: ''
+        [name as keyof FormErrors]: '' // Usamos FormErrors aquí
       }));
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => { // Tipado del evento handleSubmit
     e.preventDefault();
 
     const validationErrors = validateForm(formData);
@@ -83,49 +66,10 @@ export function RegistrationForm() {
 
     if (!hasErrors) {
       setIsSubmitting(true);
-      setSubmitSuccess(false);
-
-      let imageUrls: string[] = []; // Para almacenar las URLs de las imágenes subidas
+      setSubmitSuccess(false); // Reinicia el estado de éxito
 
       try {
-        // *** 1. Subir imágenes a Supabase Storage ***
-        if (formData.images && formData.images.length > 0) {
-          setUploading(true);
-          const uploadPromises = formData.images.map(async (file) => {
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}.${fileExt}`; // Nombre de archivo único
-            const filePath = `${fileName}`; // Ruta dentro del bucket
-
-            // La subida de un solo archivo
-            const { data: uploadData, error: uploadError } = await supabase.storage
-              .from('emprendimientos-imagenes') // <-- ¡EL NOMBRE EXACTO DE TU BUCKET!
-              .upload(filePath, file, {
-                cacheControl: '3600',
-                upsert: false, // No sobrescribir si ya existe
-                // Puedes añadir onUploadProgress si quieres un progreso más detallado
-              });
-
-            if (uploadError) {
-              throw uploadError;
-            }
-
-            // Obtener la URL pública del archivo subido
-            const { data: publicUrlData } = supabase.storage
-              .from('emprendimientos-imagenes')
-              .getPublicUrl(filePath);
-
-            if (!publicUrlData || publicUrlData.publicUrl === null) {
-                throw new Error('No se pudo obtener la URL pública de la imagen.');
-            }
-            return publicUrlData.publicUrl;
-          });
-
-          imageUrls = await Promise.all(uploadPromises); // Espera a que todas las subidas terminen
-          setUploading(false);
-          setUploadProgress(0); // Reset progress
-        }
-
-        // *** 2. Enviar datos del formulario (incluyendo URLs de imágenes) a la base de datos de Supabase ***
+        // 1. Enviar datos a Supabase
         const { data, error } = await supabase
           .from('registros_negocios') // ¡Asegúrate de que este es el nombre EXACTO de tu tabla en Supabase!
           .insert([
@@ -138,22 +82,22 @@ export function RegistrationForm() {
               categoria: formData.category,
               descripcion: formData.description,
               sitio_web: formData.website,
-              acepta_terminos: formData.agreeToTerms,
-              imagenes: imageUrls // <-- Guarda las URLs de las imágenes aquí
-              // Asegúrate de que tu tabla en Supabase tiene una columna 'imagenes' de tipo 'text[]' (array de texto)
+              acepta_terminos: formData.agreeToTerms
             }
           ]);
 
         if (error) {
-          throw error;
+          throw error; // Propagar el error si Supabase falla
         }
 
         console.log('Datos guardados en Supabase:', data);
 
-        // *** 3. Si el envío a Supabase fue exitoso, procede con EmailJS ***
+        // 2. Si el envío a Supabase fue exitoso, procede con EmailJS
         if (formRef.current) {
-          // Si EmailJS necesita las URLs de las imágenes, tendrías que añadirlas al formulario de alguna manera
-          // o pasarlas como variables directamente en emailjs.send
+          // Nota: El error 'EmailJSResponseStatus {status: 400, text: 'The template ID not found.'}'
+          // o 'Variables size limit. The maximum allowed variables size is 50Kb'
+          // significa que debes revisar tu configuración de EmailJS.
+          // Si el EmailJS falla, pero Supabase no, los datos ya estarán guardados.
           await emailjs.sendForm(
             'service_a1dy6pm',
             'template_3nmnw0p',
@@ -171,10 +115,9 @@ export function RegistrationForm() {
           setSubmitSuccess(false);
         }, 5000);
 
-      } catch (error: any) {
-        console.error('Error al enviar el formulario o subir imagen:', error.message || error);
+      } catch (error: any) { // Captura el error y tipa como 'any' para acceder a 'message'
+        console.error('Error al enviar el formulario:', error.message || error);
         alert('Error al enviar el formulario, intenta más tarde.');
-        setUploading(false); // Asegúrate de resetear el estado de subida en caso de error
       } finally {
         setIsSubmitting(false);
       }
@@ -192,7 +135,8 @@ export function RegistrationForm() {
         </div>
       )}
 
-      {/* Tus campos de formulario existentes */}
+      {/* Tus campos de formulario aquí */}
+      {/* Asegúrate de que los atributos 'name' en tus inputs coincidan exactamente con las claves en FormData */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -201,14 +145,13 @@ export function RegistrationForm() {
           <input
             type="text"
             id="name"
-            name="name"
+            name="name" // <-- ¡Importante! Coincide con 'name' en FormData
             value={formData.name}
             onChange={handleChange}
             className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
           />
           {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
         </div>
-        {/* ... todos los demás campos (ownerName, email, phone, address, category, description, website, agreeToTerms) ... */}
         <div>
           <label htmlFor="ownerName" className="block text-sm font-medium text-gray-700 mb-1">
             Nombre del dueño *
@@ -216,7 +159,7 @@ export function RegistrationForm() {
           <input
             type="text"
             id="ownerName"
-            name="ownerName"
+            name="ownerName" // <-- ¡Importante! Coincide con 'ownerName' en FormData
             value={formData.ownerName}
             onChange={handleChange}
             className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.ownerName ? 'border-red-500' : 'border-gray-300'}`}
@@ -286,96 +229,68 @@ export function RegistrationForm() {
           </select>
           {errors.category && <p className="mt-1 text-sm text-red-600">{errors.category}</p>}
         </div>
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-            Descripción del negocio *
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            rows={4}
-            value={formData.description}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
-          />
-          {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
-        </div>
-        <div>
-          <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
-            Página Web/Red Social (Opcional)
-          </label>
+      </div> {/* This div closes the grid-cols-1 md:grid-cols-2 div */}
+      <div> {/* This div starts the description field */}
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+          Descripción del negocio *
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          rows={4}
+          value={formData.description}
+          onChange={handleChange}
+          className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
+        />
+        {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
+      </div>
+      <div> {/* This div starts the website field */}
+        <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
+          Página Web/Red Social (Opcional)
+        </label>
+        <input
+          type="url"
+          id="website"
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          placeholder="https://..."
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+        />
+      </div>
+      <div className="flex items-start">
+        <div className="flex items-center h-5">
           <input
-            type="url"
-            id="website"
-            name="website"
-            value={formData.website}
+            id="agreeToTerms"
+            name="agreeToTerms"
+            type="checkbox"
+            checked={formData.agreeToTerms}
             onChange={handleChange}
-            placeholder="https://..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+            className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded"
           />
         </div>
-
-        {/* Campo de subida de imágenes */}
-        <div>
-          <label htmlFor="images" className="block text-sm font-medium text-gray-700 mb-1">
-            Imágenes del negocio (Máx. 3)
+        <div className="ml-3 text-sm">
+          <label htmlFor="agreeToTerms" className="font-medium text-gray-700">
+            Estoy de acuerdo con los{' '}
+            <a href="#" className="text-green-600 hover:text-green-800">
+              términos y condiciones
+            </a>{' '}
+            *
           </label>
-          <input
-            type="file"
-            id="images"
-            name="images"
-            multiple // Permite seleccionar múltiples archivos
-            accept="image/*" // Solo acepta archivos de imagen
-            onChange={handleChange} // Usa el mismo handleChange
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-          />
-          {formData.images.length > 0 && (
-            <p className="mt-2 text-sm text-gray-500">
-              Archivos seleccionados: {formData.images.map(file => file.name).join(', ')}
-            </p>
-          )}
-          {uploading && (
-            <div className="mt-2 text-sm text-green-600">
-              Subiendo imágenes...
-            </div>
-          )}
+          {errors.agreeToTerms && <p className="mt-1 text-sm text-red-600">{errors.agreeToTerms}</p>}
         </div>
-
-        <div className="flex items-start">
-          <div className="flex items-center h-5">
-            <input
-              id="agreeToTerms"
-              name="agreeToTerms"
-              type="checkbox"
-              checked={formData.agreeToTerms}
-              onChange={handleChange}
-              className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded"
-            />
-          </div>
-          <div className="ml-3 text-sm">
-            <label htmlFor="agreeToTerms" className="font-medium text-gray-700">
-              Estoy de acuerdo con los{' '}
-              <a href="#" className="text-green-600 hover:text-green-800">
-                términos y condiciones
-              </a>{' '}
-              *
-            </label>
-            {errors.agreeToTerms && <p className="mt-1 text-sm text-red-600">{errors.agreeToTerms}</p>}
-          </div>
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            disabled={isSubmitting || uploading} // Deshabilitar si se están subiendo archivos
-            className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
-              isSubmitting || uploading ? 'opacity-70 cursor-not-allowed' : ''
-            }`}
-          >
-            {isSubmitting ? 'Enviando...' : uploading ? 'Subiendo imágenes...' : 'Enviar'}
-          </button>
-        </div>
-        </div>
-      </form>
+      </div>
+      <div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
+            isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+          }`}
+        >
+          {isSubmitting ? 'Enviando...' : 'Enviar'}
+        </button>
+      </div>
+    </form>
   );
 }

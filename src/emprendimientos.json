@@ -1,0 +1,158 @@
+[
+    {
+        "id": "1",
+        "name": "Secret Coffee",
+        "category": "Comida y Bebida",
+        "description": "Una cafetería acogedora con los mejores granos de café de la región.",
+        "ownerName": "Juan Pérez",
+        "email": "juan.perez@secretcoffee.com",
+        "phone": "90909090",
+        "address": "90 mts sur del pali",
+        "website": "https://www.secretcoffee.com",
+        "hours": "Lunes-Viernes: 7 AM - 6 PM",
+        "products": [
+            "Café especial",
+            "Repostería artesanal",
+            "Smoothies"
+        ],
+        "images": [
+            "/Turrialba-Emprende/img/secret-coffee.png"
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Panadería Dulce Amanecer",
+        "category": "Panadería",
+        "description": "Pan fresco y postres deliciosos hechos con amor cada mañana.",
+        "ownerName": "María García",
+        "email": "maria.garcia@dulceamanecer.com",
+        "phone": "87654321",
+        "address": "Frente a la plaza central",
+        "website": null,
+        "hours": "Martes-Sábado: 6 AM - 5 PM",
+        "products": [
+            "Pan de masa madre",
+            "Queques",
+            "Galletas"
+        ],
+        "images": [
+            "/Turrialba-Emprende/img/panaderia.png"
+        ]
+    },
+    {
+        "id": "3",
+        "name": "Artesanía Local",
+        "category": "Artesanía",
+        "description": "Piezas únicas hechas a mano, reflejando la cultura local.",
+        "ownerName": "Pedro Gómez",
+        "email": "pedro.gomez@artesania.com",
+        "phone": "12345678",
+        "address": "Mercado Central",
+        "website": null,
+        "hours": "Lunes-Sábado: 9 AM - 5 PM",
+        "products": [
+            "Cerámica",
+            "Tejidos",
+            "Joyas artesanales"
+        ],
+        "images": [
+            "/Turrialba-Emprende/img/artesania-con-tapas.png"
+        ]
+    },
+    {
+        "id": "4",
+        "name": "La Finca Costarricense",
+        "category": "Agroturismo",
+        "description": "Experimenta la vida en una finca tradicional costarricense.",
+        "ownerName": "Ana Solís",
+        "email": "ana.solis@finca.com",
+        "phone": "87651234",
+        "address": "Faldas del Volcán Turrialba",
+        "website": "https://www.lafinca.com",
+        "hours": "Todos los días: 8 AM - 4 PM",
+        "products": [
+            "Tour de café",
+            "Tour de abejas",
+            "Degustación de queso"
+        ],
+        "images": [
+            "/Turrialba-Emprende/img/finca-costarricense.png"
+        ]
+    },
+    {
+        "id": "5",
+        "name": "Huerta Ecológica Verde Vida",
+        "category": "Agricultura",
+        "description": "Productos frescos y orgánicos directamente de nuestra huerta familiar. Cultivamos con amor y respeto por la naturaleza.",
+        "ownerName": "Sofía Morales",
+        "email": "sofia.m@verdevida.com",
+        "phone": "88112233",
+        "address": "Calle Principal, contiguo a la escuela El Bajo",
+        "website": null,
+        "hours": "Sábados: 7 AM - 12 PM (Mercado en Finca)",
+        "products": [
+            "Vegetales de hoja",
+            "Hortalizas",
+            "Frutas de temporada",
+            "Hierbas aromáticas"
+        ],
+        "images": [
+            "/Turrialba-Emprende/img/planta-cafe.png"
+        ]
+    },
+    {
+        "id": "6",
+        "name": "Expediciones Turrialba Aventura",
+        "category": "Turismo de Aventura",
+        "description": "Vive la adrenalina en los ríos y montañas de Turrialba. Rafting, canyoning y senderismo para todos los niveles.",
+        "ownerName": "Carlos Rojas",
+        "email": "carlos.r@turrialbaaventura.com",
+        "phone": "86554433",
+        "address": "Ruta 224, km 3, desvío a Pejibaye",
+        "website": "https://www.turrialbaaventura.com",
+        "hours": "Reservaciones con anticipación",
+        "products": [
+            "Tour de Rafting (Río Pacuare)",
+            "Canyoning (Cascadas)",
+            "Senderismo Volcán Turrialba"
+        ],
+        "images": [
+            "/Turrialba-Emprende/img/volcan-turrialba.png"
+        ]
+    },
+    {
+        "id": "7",
+        "name": "Apiario Dulce Néctar",
+        "category": "Alimentos Artesanales",
+        "description": "Miel pura de abejas de Turrialba, cosechada con métodos sostenibles. Disfruta el sabor natural del panal.",
+        "ownerName": "Ricardo Soto",
+        "email": "ricardo.s@dulcenectar.com",
+        "phone": "87776655",
+        "address": "Camino a Santa Cruz, a 2km del cruce",
+        "website": null,
+        "hours": "Visitas con cita previa",
+        "products": [
+            "Miel de abeja pura",
+            "Panales de cera",
+            "Propóleo",
+            "Velas de cera"
+        ],
+        "images": [
+            "/Turrialba-Emprende/img/panal-abejas.png"
+        ]
+    },
+    {
+    "id": "8",
+    "name": "Quesería La Montañesa",
+    "category": "Lácteos",
+    "description": "Auténtico queso Turrialba y otros productos lácteos frescos, elaborados con leche de nuestras vacas.",
+    "ownerName": "Fernando Castro",
+    "email": "fernando.c@lamontanesa.com",
+    "phone": "86665544",
+    "address": "Finca La Pastora, Santa Teresita",
+    "website": null,
+    "hours": "Lunes-Viernes: 8 AM - 4 PM",
+    "products": ["Queso Turrialba", "Cuajada", "Natilla", "Leche fresca"],
+    "images": ["/Turrialba-Emprende/img/queso-turrialba.png"]
+  }
+]

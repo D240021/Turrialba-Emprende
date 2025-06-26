@@ -10,7 +10,7 @@ export interface FormData {
   description: string; // Descripción del negocio
   website: string; // Opcional, pero tipo string
   agreeToTerms: boolean;
-  images: File[];
+  //images: File[];
 }
 
 export interface FormErrors {

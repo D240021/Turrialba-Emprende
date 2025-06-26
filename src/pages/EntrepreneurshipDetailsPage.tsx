@@ -3,70 +3,40 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeftIcon, PhoneIcon, MailIcon, MapPinIcon, ClockIcon } from 'lucide-react';
-// import { entrepreneurships } from '../utils/data'; // <-- ¡ELIMINA ESTA LÍNEA!
-import { ImageGallery } from '../components/ImageGallery';
 import { InteractiveMap } from '../components/InteractiveMap';
-import { supabase } from '../utils/supabaseCliente'; // <-- Importa el cliente de Supabase
-import { Entrepreneurship } from '../types'; // <-- Importa la interfaz de Emprendimiento
+import { Entrepreneurship } from '../types'; // Asegúrate de que esta interfaz es correcta
+import rawEntrepreneurshipData from '../emprendimientos.json'; // ¡Importa tu JSON!
 
 export function EntrepreneurshipDetailsPage() {
-  const { id } = useParams<{ id: string }>(); // Tipar `id` como string
-  const [entrepreneurship, setEntrepreneurship] = useState<Entrepreneurship | null>(null); // Tipar el estado
+  const { id } = useParams<{ id: string }>();
+  const [entrepreneurship, setEntrepreneurship] = useState<Entrepreneurship | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchEntrepreneurship = async () => {
-      if (!id) {
-        setError('ID de emprendimiento no proporcionado.');
-        setLoading(false);
-        return;
+    if (!id) {
+      setError('ID de emprendimiento no proporcionado.');
+      setLoading(false);
+      return;
+    }
+    try {
+      // Buscar el emprendimiento por ID en los datos del JSON
+      const foundEntrepreneurship = (rawEntrepreneurshipData as Entrepreneurship[]).find(
+        (e) => e.id === id
+      );
+
+      if (foundEntrepreneurship) {
+        setEntrepreneurship(foundEntrepreneurship);
+      } else {
+        setEntrepreneurship(null); // Emprendimiento no encontrado
       }
-      try {
-        // Consulta a Supabase para obtener un emprendimiento por ID
-        const { data, error } = await supabase
-          .from('registros_negocios') // <-- ¡EL NOMBRE EXACTO DE TU TABLA EN SUPABASE!
-          .select('*') // Selecciona todas las columnas
-          .eq('id', id) // Filtra por la columna 'id' (ajusta si tu columna ID tiene otro nombre)
-          .single(); // Espera un solo registro
-
-        if (error) {
-          throw error;
-        }
-
-        if (data) {
-            // Aquí podrías necesitar mapear los nombres de las columnas de Supabase
-            // a los nombres de las propiedades que esperas en tu interfaz Entrepreneurship
-            // Por ejemplo, si Supabase tiene 'nombre_negocio' y tu interfaz espera 'name':
-            const mappedData: Entrepreneurship = {
-                id: data.id, // O el nombre de tu columna ID
-                name: data.nombre_negocio,
-                category: data.categoria,
-                description: data.descripcion,
-                ownerName: data.nombre_dueno,
-                email: data.correo_electronico,
-                phone: data.telefono,
-                address: data.direccion,
-                website: data.sitio_web || '', // Si es opcional
-                hours: data.horarios || 'No especificado', // Si tienes esta columna
-                products: data.productos || [], // Asumiendo que es un array
-                images: data.imagenes || [] // Asumiendo que es un array de URLs
-                // Agrega aquí todos los mapeos de tus columnas
-            };
-            setEntrepreneurship(mappedData);
-        } else {
-            setEntrepreneurship(null); // No se encontró el emprendimiento
-        }
-      } catch (err: any) {
-        console.error('Error al cargar el emprendimiento:', err.message);
-        setError('No se pudo cargar la información del emprendimiento.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEntrepreneurship();
-  }, [id]); // El efecto se ejecuta cuando cambia el ID
+      setLoading(false);
+    } catch (err: any) {
+      console.error('Error al cargar el emprendimiento desde el JSON:', err.message);
+      setError('No se pudo cargar la información del emprendimiento.');
+      setLoading(false);
+    }
+  }, [id]);
 
   if (loading) {
     return <div className="container mx-auto px-4 py-16 text-center">Cargando...</div>;
@@ -87,8 +57,11 @@ export function EntrepreneurshipDetailsPage() {
     );
   }
 
-  // Resto del JSX permanece igual, ya que `entrepreneurship` ahora está tipado
-  // y contiene las propiedades que esperas.
+  // Define la URL de la imagen principal o un placeholder
+  const imageUrl = entrepreneurship.images && entrepreneurship.images.length > 0
+    ? entrepreneurship.images[0] // Toma la primera imagen del array del JSON
+    : 'https://via.placeholder.com/400x300?text=No+Imagen+Disponible';
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Link to="/directory" className="text-green-600 hover:text-green-800 inline-flex items-center mb-6">
@@ -97,7 +70,15 @@ export function EntrepreneurshipDetailsPage() {
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
           <div className="md:w-1/2">
-            <ImageGallery images={entrepreneurship.images} />
+            <img
+              src={imageUrl}
+              alt={entrepreneurship.name || 'Imagen del emprendimiento'}
+              className="w-full h-96 object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none"
+              onError={(e) => {
+                e.currentTarget.src = 'https://via.placeholder.com/400x300?text=Error+Loading+Image';
+                console.error(`Error al cargar imagen: ${imageUrl}`);
+              }}
+            />
           </div>
           <div className="p-6 md:w-1/2">
             <h1 className="text-3xl font-bold text-green-800 mb-2">
@@ -124,10 +105,18 @@ export function EntrepreneurshipDetailsPage() {
                   <MapPinIcon className="w-5 h-5 mr-2 text-green-600" />{' '}
                   {entrepreneurship.address}
                 </p>
-                {entrepreneurship.hours && ( // Mostrar solo si hay horarios
+                {entrepreneurship.hours && (
                   <p className="flex items-center text-gray-700">
                     <ClockIcon className="w-5 h-5 mr-2 text-green-600" />{' '}
                     {entrepreneurship.hours}
+                  </p>
+                )}
+                {entrepreneurship.website && (
+                  <p className="flex items-center text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-globe w-5 h-5 mr-2 text-green-600 inline-block align-middle"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    <a href={entrepreneurship.website} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800">
+                      {entrepreneurship.website}
+                    </a>
                   </p>
                 )}
               </div>
@@ -136,11 +125,13 @@ export function EntrepreneurshipDetailsPage() {
               <h3 className="font-semibold text-lg mb-2">
                 Productos y Servicios
               </h3>
-              <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {entrepreneurship.products && entrepreneurship.products.map((product, index) => (
-                  <li key={index}>{product}</li>
-                ))}
-              </ul>
+              {entrepreneurship.products && entrepreneurship.products.length > 0 ? (
+                <ul className="list-disc list-inside space-y-1 text-gray-700">
+                  {entrepreneurship.products.map((product, index) => <li key={index}>{product}</li>)}
+                </ul>
+              ) : (
+                <p className="text-gray-500 text-sm">No se han listado productos o servicios.</p>
+              )}
             </div>
           </div>
         </div>

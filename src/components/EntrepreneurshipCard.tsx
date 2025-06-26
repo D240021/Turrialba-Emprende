@@ -1,12 +1,33 @@
+// src/components/EntrepreneurshipCard.tsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPinIcon, PhoneIcon } from 'lucide-react';
-export function EntrepreneurshipCard({
-  entrepreneurship
-}) {
-  return <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+import { Entrepreneurship } from '../types'; // <-- Importa la interfaz
+
+// Tipar las props del componente
+interface EntrepreneurshipCardProps {
+  entrepreneurship: Entrepreneurship;
+}
+
+export function EntrepreneurshipCard({ entrepreneurship }: EntrepreneurshipCardProps) {
+  return (
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="h-48 overflow-hidden">
-        <img src={entrepreneurship.images[0]} alt={entrepreneurship.name} className="w-full h-full object-cover transition-transform hover:scale-105 duration-300" />
+        {/* Asegúrate de que images[0] exista antes de usarlo */}
+        {entrepreneurship.images && entrepreneurship.images.length > 0 && (
+          <img
+            src={entrepreneurship.images[0]}
+            alt={entrepreneurship.name}
+            className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+          />
+        )}
+        {/* Opcional: un fallback si no hay imágenes */}
+        {(!entrepreneurship.images || entrepreneurship.images.length === 0) && (
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                No Image
+            </div>
+        )}
       </div>
       <div className="p-4">
         <span className="inline-block px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full mb-2">
@@ -30,5 +51,6 @@ export function EntrepreneurshipCard({
           Ver detalles
         </Link>
       </div>
-    </div>;
+    </div>
+  );
 }

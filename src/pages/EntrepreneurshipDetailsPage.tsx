@@ -50,7 +50,7 @@ export function EntrepreneurshipDetailsPage() {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <h2 className="text-2xl font-bold mb-4">Emprendimiento no encontrado</h2>
-        <Link to="/directory" className="text-green-600 hover:text-green-800 inline-flex items-center">
+        <Link to="/" className="text-green-600 hover:text-green-800 inline-flex items-center">
           <ArrowLeftIcon className="w-4 h-4 mr-2" /> Volver al Directorio
         </Link>
       </div>

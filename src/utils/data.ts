@@ -45,7 +45,7 @@ export const entrepreneurships = [{
   hours: 'Lunes a Miércoles de 7 a.m. a 12 m.d. ',
   coordinates: [9.8846, -83.6782],
   images: ['img/finca-costarricense.png'],
-  products: ['Tour por la finca']
+  products: ['Lunes a Miércoles de 7 a.m. a 12 m.d. ']
 }, {
   id: 'ent5',
   name: 'Artesanías Alicia',

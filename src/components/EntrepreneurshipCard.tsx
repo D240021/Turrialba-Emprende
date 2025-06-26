@@ -13,7 +13,7 @@ interface EntrepreneurshipCardProps {
 export function EntrepreneurshipCard({ entrepreneurship }: EntrepreneurshipCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="h-48 overflow-hidden">
+      <div className="h-48 overflow-hidden" id="emprendimientos">
         {/* Asegúrate de que images[0] exista antes de usarlo */}
         {entrepreneurship.images && entrepreneurship.images.length > 0 && (
           <img

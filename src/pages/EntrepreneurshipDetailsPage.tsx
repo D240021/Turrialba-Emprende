@@ -1,29 +1,97 @@
+// src/pages/EntrepreneurshipDetailsPage.tsx
+
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeftIcon, PhoneIcon, MailIcon, MapPinIcon, ClockIcon } from 'lucide-react';
-import { entrepreneurships } from '../utils/data';
+// import { entrepreneurships } from '../utils/data'; // <-- ¡ELIMINA ESTA LÍNEA!
 import { ImageGallery } from '../components/ImageGallery';
 import { InteractiveMap } from '../components/InteractiveMap';
+import { supabase } from '../utils/supabaseCliente'; // <-- Importa el cliente de Supabase
+import { Entrepreneurship } from '../types'; // <-- Importa la interfaz de Emprendimiento
+
 export function EntrepreneurshipDetailsPage() {
-  const {
-    id
-  } = useParams();
-  const [entrepreneurship, setEntrepreneurship] = useState(null);
+  const { id } = useParams<{ id: string }>(); // Tipar `id` como string
+  const [entrepreneurship, setEntrepreneurship] = useState<Entrepreneurship | null>(null); // Tipar el estado
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    // In a real application, this would fetch from an API
-    const foundEntrepreneurship = entrepreneurships.find(e => e.id === id);
-    setEntrepreneurship(foundEntrepreneurship);
-  }, [id]);
-  if (!entrepreneurship) {
-    return <div className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-bold mb-4">Emprendimiento no encontrado</h2>
-        <Link to="/" className="text-green-600 hover:text-green-800 inline-flex items-center">
-          <ArrowLeftIcon className="w-4 h-4 mr-2" /> Volver al inicio
-        </Link>
-      </div>;
+    const fetchEntrepreneurship = async () => {
+      if (!id) {
+        setError('ID de emprendimiento no proporcionado.');
+        setLoading(false);
+        return;
+      }
+      try {
+        // Consulta a Supabase para obtener un emprendimiento por ID
+        const { data, error } = await supabase
+          .from('registros_negocios') // <-- ¡EL NOMBRE EXACTO DE TU TABLA EN SUPABASE!
+          .select('*') // Selecciona todas las columnas
+          .eq('id', id) // Filtra por la columna 'id' (ajusta si tu columna ID tiene otro nombre)
+          .single(); // Espera un solo registro
+
+        if (error) {
+          throw error;
+        }
+
+        if (data) {
+            // Aquí podrías necesitar mapear los nombres de las columnas de Supabase
+            // a los nombres de las propiedades que esperas en tu interfaz Entrepreneurship
+            // Por ejemplo, si Supabase tiene 'nombre_negocio' y tu interfaz espera 'name':
+            const mappedData: Entrepreneurship = {
+                id: data.id, // O el nombre de tu columna ID
+                name: data.nombre_negocio,
+                category: data.categoria,
+                description: data.descripcion,
+                ownerName: data.nombre_dueno,
+                email: data.correo_electronico,
+                phone: data.telefono,
+                address: data.direccion,
+                website: data.sitio_web || '', // Si es opcional
+                hours: data.horarios || 'No especificado', // Si tienes esta columna
+                products: data.productos || [], // Asumiendo que es un array
+                images: data.imagenes || [] // Asumiendo que es un array de URLs
+                // Agrega aquí todos los mapeos de tus columnas
+            };
+            setEntrepreneurship(mappedData);
+        } else {
+            setEntrepreneurship(null); // No se encontró el emprendimiento
+        }
+      } catch (err: any) {
+        console.error('Error al cargar el emprendimiento:', err.message);
+        setError('No se pudo cargar la información del emprendimiento.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEntrepreneurship();
+  }, [id]); // El efecto se ejecuta cuando cambia el ID
+
+  if (loading) {
+    return <div className="container mx-auto px-4 py-16 text-center">Cargando...</div>;
   }
-  return <div className="container mx-auto px-4 py-8">
-      <Link to="//" className="text-green-600 hover:text-green-800 inline-flex items-center mb-6">
+
+  if (error) {
+    return <div className="container mx-auto px-4 py-16 text-center text-red-600">{error}</div>;
+  }
+
+  if (!entrepreneurship) {
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h2 className="text-2xl font-bold mb-4">Emprendimiento no encontrado</h2>
+        <Link to="/directory" className="text-green-600 hover:text-green-800 inline-flex items-center">
+          <ArrowLeftIcon className="w-4 h-4 mr-2" /> Volver al Directorio
+        </Link>
+      </div>
+    );
+  }
+
+  // Resto del JSX permanece igual, ya que `entrepreneurship` ahora está tipado
+  // y contiene las propiedades que esperas.
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Link to="/directory" className="text-green-600 hover:text-green-800 inline-flex items-center mb-6">
         <ArrowLeftIcon className="w-4 h-4 mr-2" /> Volver a los emprendimientos
       </Link>
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -56,10 +124,12 @@ export function EntrepreneurshipDetailsPage() {
                   <MapPinIcon className="w-5 h-5 mr-2 text-green-600" />{' '}
                   {entrepreneurship.address}
                 </p>
-                <p className="flex items-center text-gray-700">
-                  <ClockIcon className="w-5 h-5 mr-2 text-green-600" />{' '}
-                  {entrepreneurship.hours}
-                </p>
+                {entrepreneurship.hours && ( // Mostrar solo si hay horarios
+                  <p className="flex items-center text-gray-700">
+                    <ClockIcon className="w-5 h-5 mr-2 text-green-600" />{' '}
+                    {entrepreneurship.hours}
+                  </p>
+                )}
               </div>
             </div>
             <div className="mt-4">
@@ -67,7 +137,9 @@ export function EntrepreneurshipDetailsPage() {
                 Productos y Servicios
               </h3>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {entrepreneurship.products.map((product, index) => <li key={index}>{product}</li>)}
+                {entrepreneurship.products && entrepreneurship.products.map((product, index) => (
+                  <li key={index}>{product}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -79,5 +151,6 @@ export function EntrepreneurshipDetailsPage() {
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }

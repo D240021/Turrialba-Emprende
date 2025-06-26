@@ -13,6 +13,7 @@ export const validateForm = (formData: FormData): FormErrors => {
     agreeToTerms: ''
   };
 
+  
   // Business Name validation
   if (!formData.name.trim()) {
     errors.name = 'Business name is required';
